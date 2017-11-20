@@ -1,0 +1,224 @@
+@import url(https://fonts.googleapis.com/css?family=Sacramento);
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0px;
+  box-sizing: border-box;
+  background: url("") #CEECED;
+  font-family: 'Sacramento', cursive;
+  font-size: 1.4rem;
+  color: #2f2f2f;
+  text-align: left;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100%;
+  -webkit-perspective: 1000px;
+          perspective: 1000px;
+}
+
+.envelope {
+  background: #e58477;
+  border-radius: 0 0 4px 4px;
+  width: 320px;
+  height: 320px;
+  min-height: 320px;
+  margin: 20px auto;
+  position: relative;
+  -webkit-transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+  transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+  -webkit-transform-origin: 50 50%;
+          transform-origin: 50 50%;
+}
+.envelope:before, .envelope:after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+}
+.envelope:before {
+  left: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 296px 0 0 300px;
+  border-color: transparent transparent transparent #E9978C;
+}
+.envelope:after {
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 296px 300px;
+  border-color: transparent transparent #E9978C transparent;
+}
+.envelope.open {
+  -webkit-transform: rotateZ(7deg) translateY(130px) rotateY(-9deg);
+          transform: rotateZ(7deg) translateY(130px) rotateY(-9deg);
+}
+.envelope.open .flap-outside {
+  top: -1px;
+  -webkit-animation: open-flap 0.6s ease-in-out forwards;
+          animation: open-flap 0.6s ease-in-out forwards;
+}
+.envelope.open .flap-outside .flap {
+  background: #e58477;
+}
+.envelope.open .card {
+  -webkit-transform: translateX(14%) translateY(-200px);
+          transform: translateX(14%) translateY(-200px);
+  -webkit-transition-delay: 0.6s;
+          transition-delay: 0.6s;
+}
+.envelope .card {
+  background: #ffffff;
+  position: absolute;
+  font-size: 1.4rem;
+  overflow: hidden;
+  left: 0;
+  bottom: 0;
+  width: 70%;
+  height: 85%;
+  padding: 10px 20px;
+  -webkit-transform: translateX(14%);
+          transform: translateX(14%);
+  -webkit-transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1) 0s;
+  transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1) 0s;
+  z-index: 1;
+}
+.envelope .flap-container {
+  border-radius: 4px;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: all 0.4s cubic-bezier(0.18, 0.81, 0.76, 0.93) 0s;
+  transition: all 0.4s cubic-bezier(0.18, 0.81, 0.76, 0.93) 0s;
+  z-index: 3;
+}
+.envelope .flap-outside {
+  overflow-y: auto;
+  -webkit-transform-origin: 50% 0;
+          transform-origin: 50% 0;
+  -webkit-animation-delay: 0.6s;
+          animation-delay: 0.6s;
+  -webkit-animation-fill-mode: backwards;
+          animation-fill-mode: backwards;
+  z-index: 4;
+}
+.envelope .flap-outside .flap {
+  background: #E9978C;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+}
+.envelope .flap-outside .flap:after {
+  background: #e58477;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  content: '';
+  display: block;
+  position: absolute;
+  -webkit-transform: rotateX(180deg);
+          transform: rotateX(180deg);
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+.envelope .flap-inside {
+  -webkit-transform: rotateX(180deg);
+          transform: rotateX(180deg);
+  border-radius: 0 0 4px 4px;
+  overflow: hidden;
+}
+.envelope .flap-inside .flap {
+  border-radius: 40px 40px 80px 40px;
+  border: 1px solid #e58477;
+  margin-top: 20px;
+}
+.envelope .flap {
+  background: #E9978C;
+  border: 1px solid #e58477;
+  border-radius: 40px;
+  overflow: hidden;
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  margin: -20px 0 0 -151px;
+  -webkit-transform: rotateZ(45deg);
+          transform: rotateZ(45deg);
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transition: all 0.8s ease 0s;
+  transition: all 0.8s ease 0s;
+  z-index: 2;
+}
+.envelope .flap .lining {
+  background: url("") 50% 50% #A3CAC0;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  border-radius: 0 0 40px 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 92%;
+  height: 92%;
+}
+.envelope svg.string {
+  position: relative;
+  z-index: 10;
+}
+
+@-webkit-keyframes open-flap {
+  0% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+    z-index: 4;
+  }
+  50% {
+    -webkit-transform: rotateX(90deg);
+            transform: rotateX(90deg);
+    z-index: 0;
+  }
+  100% {
+    -webkit-transform: rotateX(180deg);
+            transform: rotateX(180deg);
+    z-index: 0;
+  }
+}
+
+@keyframes open-flap {
+  0% {
+    -webkit-transform: rotateX(0deg);
+            transform: rotateX(0deg);
+    z-index: 4;
+  }
+  50% {
+    -webkit-transform: rotateX(90deg);
+            transform: rotateX(90deg);
+    z-index: 0;
+  }
+  100% {
+    -webkit-transform: rotateX(180deg);
+            transform: rotateX(180deg);
+    z-index: 0;
+  }
+}
