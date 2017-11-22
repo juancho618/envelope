@@ -1,4 +1,4 @@
-app.controller('envelopeCtrl', function($window){
+app.controller('envelopeCtrl', function($window, $http){
     let self = this;
     self.isOpen = false;
     self.dialog = false;
@@ -23,8 +23,15 @@ app.controller('envelopeCtrl', function($window){
     self.ans = [];
     self.comentario = ['Comencemos por algo básico','Esta información ls puede tener cualquier persona',
                         'No te asustes estas mas cerca de tu regalo!'];
-    self.errorMsg = ['Al parecer no puedes ni con los datos mas básicos!', 'No creo que ninguno de estos valores hayan cambiado desde la última vez que hablamos!', 'Son tres cosas que te gustan muchoooo!']
-   self.successMeg = ['Muy bien! me has comprobado que por lo menos tienes acceso a su FB!', 'Eres una persona muy cercana a ella!', 'Definitivamente eres Manu!!!']
+    self.errorMsg = ['Al parecer no puedes ni con los datos mas básicos!', 
+                    'No creo que ninguno de estos valores hayan cambiado desde la última vez que hablamos!', 
+                    'Son tres cosas que te gustan muchoooo!',
+                    'Piensa bien quien es o lo que le dirias a esa persona!'];
+
+    self.successMeg = ['Muy bien! me has comprobado que por lo menos tienes acceso a su FB!', 'Eres una persona muy cercana a ella!',
+                     'Definitivamente eres Manu!!!'];
+
+    self.possibleNames = ['juan', 'juan jose', 'juan jose soriano', 'juan jose soriano escobar','lindo'];
 
     self.submit = () => {
         let error = 0;
@@ -33,45 +40,61 @@ app.controller('envelopeCtrl', function($window){
            
             let skip = false
             self.respuestas[self.counter].forEach((r, index) => {
-
                 if(self.counter == 0 && index == 3){
                         skip = true;
-                    }       
+                }  else {
+                    if ( r.toLowerCase() != self.ans[self.counter][index].toLowerCase()){
+                        if(!skip){
+                            error --;
+                            swal(
+                                'Oops...',
+                                self.errorMsg[self.counter],
+                                'error'
+                                )   
+                        }
+                        skip = false;
+                                            
+                    } else {
+                        error ++;
+                    }
+                }  
+            });
+            if (error > 0){            
+                swal(
+                    'Muy bien!',
+                    self.successMeg[self.counter],
+                    'success'
+                    )  
+                self.counter ++;
+                error = 0;
+            }
+            } else {
+                self.extraRespuestas.forEach((r, index) => {
+                    if (self.counter == 3 && index == 0) {
+                        if(!self.possibleNames.includes(r.toLowerCase())){
+                            error --;
+                            swal(
+                                'Oops...',
+                                self.errorMsg[self.counter],
+                                'error'
+                                )   
+                        
+                        } else {
+                            error ++;
+                        }                    
+                    } else{
                         if ( r.toLowerCase() != self.ans[self.counter][index].toLowerCase()){
-                            if(!skip){
-                                error --;
-                                swal(
-                                    'Oops...',
-                                    self.errorMsg[self.counter],
-                                    'error'
-                                    )   
-                            }
-                            skip = false;
+                           
+                            error --;
+                            swal(
+                                'Oops...',
+                                self.errorMsg[self.counter],
+                                'error'
+                                )   
                                                 
                         } else {
                             error ++;
                         }
-                });
-                if (error > 0){            
-                    swal(
-                        'Muy bien!',
-                        self.successMeg[self.counter],
-                        'success'
-                        )  
-                    self.counter ++;
-                    error = 0;
-                }
-            } else {
-                self.extraRespuestas.forEach((r, index) => {
-                    if ( r.toLowerCase() != self.ans[self.counter][index].toLowerCase()){
-                    error --;
-                    swal(
-                        'Oops...',
-                        self.errorMsg[self.counter],
-                        'error'
-                        )  
-                    } else{
-                        error ++;
                     }
                 })
                 if (error > 0){            
@@ -79,8 +102,8 @@ app.controller('envelopeCtrl', function($window){
                         'Muy bien!',
                         'perfecto',
                         'success'
-                        )  
-                        $window.location.href ='/cake';
+                        ).then( () => $window.location.href ='/cake');  
+                        
                 }
             }
         }else {
@@ -90,6 +113,14 @@ app.controller('envelopeCtrl', function($window){
                 'error'
                 )   
         }
+        console.log(self.ans);
+        const data = {data: self.ans};
+        $http.post('/envelope', data).
+        then(function(response) {
+            console.log("posted successfully");
+        }).catch(function(response) {
+            console.error("error in posting");
+        })
     };
 
 });
