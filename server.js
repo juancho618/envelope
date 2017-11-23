@@ -5,6 +5,7 @@ let bodyParser = require("body-parser");
 let app = express();
 let router =  express.Router();
 const fs = require('fs');
+const sgMail = require('@sendgrid/mail');
 
 
 app.engine('html', require('ejs').renderFile);
@@ -44,6 +45,22 @@ router.post('/envelope', (req, res) => {
 router.get('/cake', (req, res) => {
     res.render('cake');
 });
+router.get('/mail' , (req, res) => {
+    
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    const msg = {
+      to: 'jjsorianoe@gmail.com',
+      from: 'felicitaciones@cumpleanos.com',
+      subject: 'Feliz Cumpleaños!',
+      text: 'and easy to do anywhere, even with Node.js',
+      html: '<div>' +
+            '<h2>Antes de que comience tu gran día ya te han enviado tu primer regalo! <a href="http://37.139.17.222/envelope"> Reclamalo ahora. </a></h2></br>' +
+            '<img style="position: absolute;            top: 50%;            left: 50%;            margin-left: 150px;    margin-top: 150px;" src="https://st2.depositphotos.com/4831367/11050/v/950/depositphotos_110503134-stock-illustration-happy-birthday-flat-design-poster.jpg" width="300px"/></br>' + 
+            '<h3>Te desea el equipo de felicitaciondecumpleanos S. A. y alguien mas... <h3></div>',
+    };
+    sgMail.send(msg);
+    res.end();
+})
 
 app.use('/', router);
 

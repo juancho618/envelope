@@ -100,7 +100,7 @@ app.controller('envelopeCtrl', function($window, $http){
                 if (error > 0){            
                     swal(
                         'Muy bien!',
-                        'perfecto',
+                        'lama al siguiente número diciendo "Que viva la Sandía!!" para recibir mas instrucciones: +32 0483472327',
                         'success'
                         ).then( () => $window.location.href ='/cake');  
                         
